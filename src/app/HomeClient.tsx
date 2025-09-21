@@ -112,7 +112,7 @@ function WeddingCalendar({ targetDate }: { targetDate: Date }) {
             {date && (
               <div className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${
                 date === day 
-                  ? 'bg-wedding-gold text-white font-bold' 
+                  ? 'bg-wedding-gold text-white font-bold ring-2 ring-wedding-gold ring-offset-2 shadow-lg transform scale-110' 
                   : index % 7 === 0 
                     ? 'text-red-500' 
                     : index % 7 === 6 
@@ -126,13 +126,6 @@ function WeddingCalendar({ targetDate }: { targetDate: Date }) {
         ))}
       </div>
       
-      {/* 결혼식 정보 */}
-      <div className="text-center mt-4 pt-4 border-t border-gray-200">
-        <p className="text-wedding-deep font-medium">
-          {year}년 {month}월 {day}일 {weekDays[targetDate.getDay()]}요일 {targetDate.getHours()}시 {targetDate.getMinutes()}분
-        </p>
-        <p className="text-wedding-text text-sm mt-1">더베뉴지서울</p>
-      </div>
     </div>
   )
 }
@@ -203,9 +196,6 @@ function HeroSectionWithBackground({ admin, onShare, dday }: { admin: boolean; o
           <p className="text-base font-medium">더베뉴지서울</p>
         </div>
 
-        <div className="text-3xl font-wedding font-bold text-wedding-gold mb-8 wedding-heart">
-          {dday}
-        </div>
 
         <div className="flex gap-4 justify-center">
           <Button onClick={onShare} className="bg-white text-wedding-deep hover:bg-wedding-cream">공유하기</Button>
@@ -311,6 +301,12 @@ export default function HomeClient() {
           <WeddingDivider />
 
           <div className="space-y-6">
+            {/* 날짜/시간 정보 */}
+            <div className="text-center mb-4">
+              <h3 className="font-wedding text-xl mb-2 text-wedding-deep">2025년 12월 28일 일요일</h3>
+              <p className="text-lg text-wedding-gold font-medium">오후 1시 10분</p>
+            </div>
+            
             {/* 달력 */}
             <WeddingCalendar targetDate={weddingDate} />
             

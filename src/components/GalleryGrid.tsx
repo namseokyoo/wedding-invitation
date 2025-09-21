@@ -9,6 +9,8 @@ interface GalleryGridProps {
 export default function GalleryGrid({ admin }: GalleryGridProps) {
   const [items, setItems] = useState<{ slot: string; url: string }[]>([])
   const [modalIndex, setModalIndex] = useState<number | null>(null)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
   async function load() {
     const res = await fetch('/api/images?prefix=gallery-', { cache: 'no-store' })
@@ -26,10 +28,34 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
   useEffect(() => { load() }, [])
 
+  // 터치 스와이프 기능
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe && modalIndex !== null) {
+      setModalIndex((modalIndex + 1) % 12)
+    }
+    if (isRightSwipe && modalIndex !== null) {
+      setModalIndex((modalIndex + 11) % 12)
+    }
+  }
+
   // 키보드 네비게이션
   useEffect(() => {
     if (modalIndex === null) return
-
+    
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setModalIndex(null)
@@ -39,7 +65,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
         setModalIndex((modalIndex + 1) % 12)
       }
     }
-
+    
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [modalIndex])
@@ -66,7 +92,13 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
       {modalIndex !== null && (
         <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50" onClick={() => setModalIndex(null)}>
-          <div className="relative w-[95vw] h-[95vh] max-w-4xl max-h-[90vh]" onClick={e => e.stopPropagation()}>
+          <div 
+            className="relative w-[95vw] h-[95vh] max-w-4xl max-h-[90vh]" 
+            onClick={e => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={items.find(item => item.slot === `gallery-${modalIndex}`)?.url || ''}
