@@ -173,26 +173,34 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
             {/* 이전/다음 버튼 */}
             <button
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-black/70 to-transparent text-white rounded-r-full w-16 h-24 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm z-10"
+              className="absolute left-0 top-1/2 -translate-y-1/2 text-white flex items-center justify-center hover:bg-wedding-gold/60 transition-all duration-300 group z-10"
               onClick={() => setModalIndex((modalIndex + 11) % 12)}
               style={{
-                fontSize: '28px',
+                fontSize: '24px',
                 fontWeight: 'bold',
-                clipPath: 'polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%)'
+                width: '48px',
+                height: '48px',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                borderRadius: '50%',
+                backdropFilter: 'blur(4px)'
               }}
             >
-              <span className="group-hover:transform group-hover:-translate-x-1 transition-transform duration-300 ml-1">‹</span>
+              <span className="group-hover:transform group-hover:-translate-x-1 transition-transform duration-300">‹</span>
             </button>
             <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-l from-black/70 to-transparent text-white rounded-l-full w-16 h-24 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm z-10"
+              className="absolute right-0 top-1/2 -translate-y-1/2 text-white flex items-center justify-center hover:bg-wedding-gold/60 transition-all duration-300 group z-10"
               onClick={() => setModalIndex((modalIndex + 1) % 12)}
               style={{
-                fontSize: '28px',
+                fontSize: '24px',
                 fontWeight: 'bold',
-                clipPath: 'polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%)'
+                width: '48px',
+                height: '48px',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                borderRadius: '50%',
+                backdropFilter: 'blur(4px)'
               }}
             >
-              <span className="group-hover:transform group-hover:translate-x-1 transition-transform duration-300 mr-1">›</span>
+              <span className="group-hover:transform group-hover:translate-x-1 transition-transform duration-300">›</span>
             </button>
 
             {/* 이미지 번호 표시 */}
