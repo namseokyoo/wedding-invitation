@@ -173,24 +173,24 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
             {/* 이전/다음 버튼 */}
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/80 text-white rounded-full w-14 h-14 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-lg border-2 border-white/20 group"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/90 text-white rounded-full w-16 h-16 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-xl border-2 border-white/30 group"
               onClick={() => setModalIndex((modalIndex + 11) % 12)}
               style={{
-                fontSize: '24px',
+                fontSize: '28px',
                 fontWeight: 'bold'
               }}
             >
-              <span className="group-hover:transform group-hover:-translate-x-1 transition-transform duration-200">‹</span>
+              <span className="group-hover:transform group-hover:-translate-x-1 transition-transform duration-200">←</span>
             </button>
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/80 text-white rounded-full w-14 h-14 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-lg border-2 border-white/20 group"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/90 text-white rounded-full w-16 h-16 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-xl border-2 border-white/30 group"
               onClick={() => setModalIndex((modalIndex + 1) % 12)}
               style={{
-                fontSize: '24px',
+                fontSize: '28px',
                 fontWeight: 'bold'
               }}
             >
-              <span className="group-hover:transform group-hover:translate-x-1 transition-transform duration-200">›</span>
+              <span className="group-hover:transform group-hover:translate-x-1 transition-transform duration-200">→</span>
             </button>
 
             {/* 이미지 번호 표시 */}
