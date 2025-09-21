@@ -5,6 +5,95 @@ import EditableImage from '@/components/EditableImage'
 import GalleryGrid from '@/components/GalleryGrid'
 import { Button, LinkButton, Section, WeddingCard, WeddingTitle, WeddingSubtitle, SectionTitle, WeddingDivider } from '@/components/UI'
 
+// 히어로 섹션 컴포넌트 (백그라운드 이미지 포함)
+function HeroSectionWithBackground({ admin, onShare, dday }: { admin: boolean; onShare: () => void; dday: string }) {
+  const [heroImageUrl, setHeroImageUrl] = useState<string | null>(null)
+
+  // 히어로 이미지 로드
+  useEffect(() => {
+    async function loadHeroImage() {
+      try {
+        const res = await fetch('/api/images?slot=hero-main')
+        const json = await res.json()
+        if (json.ok && json.item) {
+          setHeroImageUrl(json.item.url)
+        }
+      } catch (error) {
+        console.warn('Failed to load hero image')
+      }
+    }
+    loadHeroImage()
+  }, [])
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    
+    const form = new FormData()
+    form.append('slot', 'hero-main')
+    form.append('file', file)
+    form.append('password', '0123')
+    
+    const res = await fetch('/api/images', { method: 'POST', body: form })
+    const json = await res.json()
+    
+    if (json.ok) {
+      setHeroImageUrl(json.url)
+    } else {
+      alert('업로드 실패')
+    }
+  }
+
+  return (
+    <section 
+      className="relative min-h-screen flex items-center justify-center text-center"
+      style={{
+        backgroundImage: heroImageUrl ? `url(${heroImageUrl})` : undefined,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* 백그라운드 오버레이 */}
+      <div className="absolute inset-0 bg-black/40"></div>
+      
+      {/* 컨텐츠 */}
+      <div className="relative z-10 max-w-md mx-auto px-6 text-white">
+        <WeddingSubtitle className="mb-4 wedding-star text-white/90">WE ARE GETTING MARRIED</WeddingSubtitle>
+        <WeddingTitle className="mb-2 text-white">
+          Namseok & Jeongeun
+        </WeddingTitle>
+        <WeddingDivider />
+
+        <div className="wedding-text space-y-2 mb-6 text-white/90">
+          <p className="text-lg font-medium">2025년 12월 28일 일요일</p>
+          <p className="text-base">오후 1시 10분</p>
+          <p className="text-base font-medium">더베뉴지서울</p>
+        </div>
+
+        <div className="text-3xl font-wedding font-bold text-wedding-gold mb-8 wedding-heart">
+          {dday}
+        </div>
+
+        <div className="flex gap-4 justify-center">
+          <Button onClick={onShare} className="bg-white text-wedding-deep hover:bg-wedding-cream">공유하기</Button>
+          <LinkButton href="/api/ics" download className="bg-transparent border-white text-white hover:bg-white hover:text-wedding-deep">캘린더 저장</LinkButton>
+        </div>
+      </div>
+
+      {/* 관리자 모드 이미지 업로드 */}
+      {admin && (
+        <div className="absolute top-4 right-4 z-20">
+          <label className="bg-black/50 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-black/70 transition-colors">
+            {heroImageUrl ? '배경 이미지 변경' : '배경 이미지 추가'}
+            <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+          </label>
+        </div>
+      )}
+    </section>
+  )
+}
+
 const weddingDate = new Date('2025-12-28T13:10:00+09:00') // KST
 
 export default function HomeClient() {
@@ -51,38 +140,7 @@ export default function HomeClient() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="wedding-hero">
-        <div className="max-w-md mx-auto px-6 text-center">
-          <div className="mb-8">
-            <EditableImage
-              slot="hero-main"
-              className="rounded-wedding shadow-wedding-card mx-auto mb-6 aspect-[3/2]"
-              admin={isAdmin}
-            />
-          </div>
-
-          <WeddingSubtitle className="mb-4 wedding-star">WE ARE GETTING MARRIED</WeddingSubtitle>
-          <WeddingTitle className="mb-2">
-            Namseok & Jeongeun
-          </WeddingTitle>
-          <WeddingDivider />
-
-          <div className="wedding-text space-y-2 mb-6">
-            <p className="text-lg font-medium">2025년 12월 28일 일요일</p>
-            <p className="text-base">오후 1시 10분</p>
-            <p className="text-base font-medium">더베뉴지서울</p>
-          </div>
-
-          <div className="text-3xl font-wedding font-bold text-wedding-gold mb-8 wedding-heart">
-            {dday}
-          </div>
-
-          <div className="flex gap-4 justify-center">
-            <Button onClick={handleShare}>공유하기</Button>
-            <LinkButton href="/api/ics" download>캘린더 저장</LinkButton>
-          </div>
-        </div>
-      </section>
+      <HeroSectionWithBackground admin={isAdmin} onShare={handleShare} dday={dday} />
 
       {/* Couple Section */}
       <section className="wedding-couple-section">

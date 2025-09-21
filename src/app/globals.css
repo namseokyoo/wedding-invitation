@@ -66,7 +66,7 @@ section {
   text-align: center;
 }
 
-/* 웨딩 히어로 */
+/* 웨딩 히어로 - 백그라운드 이미지로 대체됨 */
 .wedding-hero {
   min-height: 100vh;
   display: flex;
@@ -75,7 +75,7 @@ section {
   align-items: center;
   text-align: center;
   position: relative;
-  background: linear-gradient(135deg, rgba(248, 246, 240, 0.95) 0%, rgba(245, 245, 220, 0.95) 100%);
+  /* background: linear-gradient(135deg, rgba(248, 246, 240, 0.95) 0%, rgba(245, 245, 220, 0.95) 100%); 백그라운드 이미지로 대체 */
 }
 
 /* 타이포그래피 */
