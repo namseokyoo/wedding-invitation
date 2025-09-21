@@ -83,7 +83,13 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
                 src={data?.url}
                 admin={admin}
                 className="aspect-square cursor-pointer"
-                onClick={() => { if (data && !admin) setModalIndex(i) }}
+                onClick={() => { 
+                  console.log('Gallery image clicked:', i, 'admin:', admin)
+                  if (!admin) {
+                    setModalIndex(i)
+                    console.log('Modal opened for index:', i)
+                  }
+                }}
               />
             </div>
           )
@@ -100,11 +106,20 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
             onTouchEnd={handleTouchEnd}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={items.find(item => item.slot === `gallery-${modalIndex}`)?.url || ''}
-              alt="gallery"
-              className="w-full h-full object-contain rounded-lg"
-            />
+            {items.find(item => item.slot === `gallery-${modalIndex}`)?.url ? (
+              <img
+                src={items.find(item => item.slot === `gallery-${modalIndex}`)?.url || ''}
+                alt="gallery"
+                className="w-full h-full object-contain rounded-lg"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-white">
+                <div className="text-center">
+                  <p className="text-lg mb-2">이미지가 없습니다</p>
+                  <p className="text-sm opacity-70">관리자 모드에서 이미지를 업로드해주세요</p>
+                </div>
+              </div>
+            )}
 
             {/* 닫기 버튼 */}
             <button

@@ -55,7 +55,7 @@ export default function EditableImage({ slot, src, admin, className, onClick }: 
         <div className="w-full h-full bg-white/10 border" />
       )}
       {admin && (
-        <label className="absolute inset-0 cursor-pointer flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity">
+        <label className="absolute inset-0 cursor-pointer flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
           <span className="bg-white text-black px-3 py-1 rounded text-sm font-medium">
             {busy ? '업로드 중…' : '이미지 선택'}
           </span>
