@@ -107,12 +107,33 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
       </div>
 
       {modalIndex !== null && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center" style={{ zIndex: 9999 }} onClick={() => {
-          console.log('Modal backdrop clicked, closing modal')
-          setModalIndex(null)
-        }}>
+        <div 
+          className="fixed inset-0 bg-red-500 flex items-center justify-center" 
+          style={{ 
+            zIndex: 9999,
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }} 
+          onClick={() => {
+            console.log('Modal backdrop clicked, closing modal')
+            setModalIndex(null)
+          }}
+        >
           <div 
-            className="relative w-[95vw] h-[95vh] max-w-4xl max-h-[90vh]" 
+            className="relative bg-white p-4 rounded-lg" 
+            style={{
+              width: '90vw',
+              height: '90vh',
+              maxWidth: '800px',
+              maxHeight: '600px'
+            }}
             onClick={e => e.stopPropagation()}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -123,7 +144,11 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
               <img
                 src={items.find(item => item.slot === `gallery-${modalIndex}`)?.url || ''}
                 alt="gallery"
-                className="w-full h-full object-contain rounded-lg"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain'
+                }}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-white">
