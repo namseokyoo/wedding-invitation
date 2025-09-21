@@ -108,7 +108,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
       {modalIndex !== null && (
         <div 
-          className="fixed inset-0 bg-red-500 flex items-center justify-center" 
+          className="fixed inset-0 bg-black/90 flex items-center justify-center" 
           style={{ 
             zIndex: 9999,
             position: 'fixed',
@@ -161,29 +161,41 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
             {/* 닫기 버튼 */}
             <button
-              className="absolute top-4 right-4 bg-black/50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition-colors"
+              className="absolute top-4 right-4 bg-black/80 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-red-500 hover:scale-110 transition-all duration-200 shadow-lg border-2 border-white/20"
               onClick={() => setModalIndex(null)}
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold'
+              }}
             >
               ✕
             </button>
 
             {/* 이전/다음 버튼 */}
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-black/70 transition-colors"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/80 text-white rounded-full w-14 h-14 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-lg border-2 border-white/20 group"
               onClick={() => setModalIndex((modalIndex + 11) % 12)}
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold'
+              }}
             >
-              ‹
+              <span className="group-hover:transform group-hover:-translate-x-1 transition-transform duration-200">‹</span>
             </button>
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-black/70 transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/80 text-white rounded-full w-14 h-14 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-lg border-2 border-white/20 group"
               onClick={() => setModalIndex((modalIndex + 1) % 12)}
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold'
+              }}
             >
-              ›
+              <span className="group-hover:transform group-hover:translate-x-1 transition-transform duration-200">›</span>
             </button>
 
             {/* 이미지 번호 표시 */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-              {modalIndex + 1} / 12
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg border border-white/20 backdrop-blur-sm">
+              <span className="text-wedding-gold font-bold">{modalIndex + 1}</span> / 12
             </div>
           </div>
         </div>
