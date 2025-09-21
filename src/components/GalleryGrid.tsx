@@ -72,6 +72,13 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
   // 모달 상태 디버깅
   console.log('GalleryGrid render - modalIndex:', modalIndex, 'items count:', items.length)
+  
+  // 모달이 열릴 때 로그 출력
+  useEffect(() => {
+    if (modalIndex !== null) {
+      console.log('Modal opened for index:', modalIndex)
+    }
+  }, [modalIndex])
 
   return (
     <div className="space-y-3">
@@ -111,7 +118,6 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {console.log('Modal content rendering for index:', modalIndex)}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             {items.find(item => item.slot === `gallery-${modalIndex}`)?.url ? (
               <img
