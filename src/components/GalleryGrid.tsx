@@ -108,7 +108,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
       {modalIndex !== null && (
         <div
-          className="fixed inset-0 bg-black/90 flex items-center justify-center"
+          className="fixed inset-0 relative bg-black/90 flex items-center justify-center"
           style={{
             zIndex: 9999,
             position: 'fixed',
@@ -159,49 +159,36 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
               </div>
             )}
 
-            {/* 닫기 버튼 */}
-            <button
-              className="absolute top-4 right-4 bg-white/90 text-gray-700 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-500 hover:text-white hover:scale-110 transition-all duration-200 shadow-lg z-20"
-              onClick={() => setModalIndex(null)}
-              style={{
-                fontSize: '16px',
-                fontWeight: 'bold'
-              }}
-            >
-              ✕
-            </button>
-
-            {/* 왼쪽 화살표 버튼 */}
-            <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 text-gray-700 w-12 h-12 flex items-center justify-center hover:bg-wedding-gold hover:text-white hover:scale-110 transition-all duration-200 shadow-lg z-20 group"
-              onClick={() => setModalIndex((modalIndex + 11) % 12)}
-              style={{
-                fontSize: '20px',
-                fontWeight: 'bold',
-                borderRadius: '50%'
-              }}
-            >
-              <span className="group-hover:transform group-hover:-translate-x-0.5 transition-transform duration-200">←</span>
-            </button>
-
-            {/* 오른쪽 화살표 버튼 */}
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 text-gray-700 w-12 h-12 flex items-center justify-center hover:bg-wedding-gold hover:text-white hover:scale-110 transition-all duration-200 shadow-lg z-20 group"
-              onClick={() => setModalIndex((modalIndex + 1) % 12)}
-              style={{
-                fontSize: '20px',
-                fontWeight: 'bold',
-                borderRadius: '50%'
-              }}
-            >
-              <span className="group-hover:transform group-hover:translate-x-0.5 transition-transform duration-200">→</span>
-            </button>
-
             {/* 이미지 번호 표시 */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg border border-white/20 backdrop-blur-sm">
               <span className="text-wedding-gold font-bold">{modalIndex + 1}</span> / 12
             </div>
           </div>
+
+          {/* 왼쪽/오른쪽 네비게이션 - 오버레이 기준 배치 */}
+          <button
+            aria-label="이전 이미지"
+            className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/80 text-white w-12 h-12 flex items-center justify-center hover:bg-black/90 hover:scale-110 transition-all duration-200 rounded-full z-20"
+            onClick={(e) => { e.stopPropagation(); setModalIndex((modalIndex + 11) % 12) }}
+          >
+            ←
+          </button>
+          <button
+            aria-label="다음 이미지"
+            className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/80 text-white w-12 h-12 flex items-center justify-center hover:bg-black/90 hover:scale-110 transition-all duration-200 rounded-full z-20"
+            onClick={(e) => { e.stopPropagation(); setModalIndex((modalIndex + 1) % 12) }}
+          >
+            →
+          </button>
+
+          {/* 닫기 버튼 - 오버레이 기준 */}
+          <button
+            aria-label="닫기"
+            className="absolute top-6 right-6 bg-white/90 text-gray-700 w-10 h-10 flex items-center justify-center hover:bg-red-500 hover:text-white hover:scale-110 transition-all duration-200 rounded-full shadow-lg z-20"
+            onClick={(e) => { e.stopPropagation(); setModalIndex(null) }}
+          >
+            ✕
+          </button>
         </div>
       )}
     </div>
