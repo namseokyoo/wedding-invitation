@@ -55,7 +55,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
   // 키보드 네비게이션
   useEffect(() => {
     if (modalIndex === null) return
-    
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setModalIndex(null)
@@ -65,14 +65,14 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
         setModalIndex((modalIndex + 1) % 12)
       }
     }
-    
+
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [modalIndex])
 
   // 모달 상태 디버깅
   console.log('GalleryGrid render - modalIndex:', modalIndex, 'items count:', items.length)
-  
+
   // 모달이 열릴 때 로그 출력
   useEffect(() => {
     if (modalIndex !== null) {
@@ -93,7 +93,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
                 src={data?.url}
                 admin={admin}
                 className="aspect-square cursor-pointer"
-                onClick={() => { 
+                onClick={() => {
                   console.log('Gallery image clicked:', i, 'admin:', admin)
                   if (!admin) {
                     setModalIndex(i)
@@ -107,9 +107,9 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
       </div>
 
       {modalIndex !== null && (
-        <div 
-          className="fixed inset-0 bg-black/90 flex items-center justify-center" 
-          style={{ 
+        <div
+          className="fixed inset-0 bg-black/90 flex items-center justify-center"
+          style={{
             zIndex: 9999,
             position: 'fixed',
             top: 0,
@@ -120,14 +120,14 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
-          }} 
+          }}
           onClick={() => {
             console.log('Modal backdrop clicked, closing modal')
             setModalIndex(null)
           }}
         >
-          <div 
-            className="relative bg-white p-4 rounded-lg" 
+          <div
+            className="relative bg-white p-4 rounded-lg"
             style={{
               width: '90vw',
               height: '90vh',
@@ -173,24 +173,26 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
             {/* 이전/다음 버튼 */}
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/90 text-white rounded-full w-16 h-16 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-xl border-2 border-white/30 group"
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-black/70 to-transparent text-white rounded-r-full w-20 h-32 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm"
               onClick={() => setModalIndex((modalIndex + 11) % 12)}
               style={{
-                fontSize: '28px',
-                fontWeight: 'bold'
+                fontSize: '32px',
+                fontWeight: 'bold',
+                clipPath: 'polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%)'
               }}
             >
-              <span className="group-hover:transform group-hover:-translate-x-1 transition-transform duration-200">←</span>
+              <span className="group-hover:transform group-hover:-translate-x-2 transition-transform duration-300 ml-2">‹</span>
             </button>
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/90 text-white rounded-full w-16 h-16 flex items-center justify-center hover:bg-wedding-gold hover:scale-110 transition-all duration-200 shadow-xl border-2 border-white/30 group"
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-gradient-to-l from-black/70 to-transparent text-white rounded-l-full w-20 h-32 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm"
               onClick={() => setModalIndex((modalIndex + 1) % 12)}
               style={{
-                fontSize: '28px',
-                fontWeight: 'bold'
+                fontSize: '32px',
+                fontWeight: 'bold',
+                clipPath: 'polygon(20% 0, 100% 0, 100% 100%, 20% 100%, 0 50%)'
               }}
             >
-              <span className="group-hover:transform group-hover:translate-x-1 transition-transform duration-200">→</span>
+              <span className="group-hover:transform group-hover:translate-x-2 transition-transform duration-300 mr-2">›</span>
             </button>
 
             {/* 이미지 번호 표시 */}
