@@ -70,6 +70,9 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [modalIndex])
 
+  // 모달 상태 디버깅
+  console.log('GalleryGrid render - modalIndex:', modalIndex, 'items count:', items.length)
+
   return (
     <div className="space-y-3">
       <div className="grid grid-cols-3 gap-2">
@@ -97,7 +100,10 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
       </div>
 
       {modalIndex !== null && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50" onClick={() => setModalIndex(null)}>
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center" style={{ zIndex: 9999 }} onClick={() => {
+          console.log('Modal backdrop clicked, closing modal')
+          setModalIndex(null)
+        }}>
           <div 
             className="relative w-[95vw] h-[95vh] max-w-4xl max-h-[90vh]" 
             onClick={e => e.stopPropagation()}
@@ -105,6 +111,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
+            {console.log('Modal content rendering for index:', modalIndex)}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             {items.find(item => item.slot === `gallery-${modalIndex}`)?.url ? (
               <img
