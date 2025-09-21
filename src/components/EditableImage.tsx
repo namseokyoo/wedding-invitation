@@ -1,11 +1,16 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type Props = { slot: string; src?: string; admin?: boolean; className?: string }
 
 export default function EditableImage({ slot, src, admin, className }: Props) {
   const [url, setUrl] = useState(src)
   const [busy, setBusy] = useState(false)
+
+  // src prop이 변경되면 url 상태도 업데이트
+  useEffect(() => {
+    setUrl(src)
+  }, [src])
 
   async function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]

@@ -15,7 +15,26 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
     const json = await res.json()
     if (json.ok) setItems(json.items)
   }
+  
   useEffect(() => { load() }, [])
+  
+  // 키보드 네비게이션
+  useEffect(() => {
+    if (modalIndex === null) return
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalIndex(null)
+      } else if (e.key === 'ArrowLeft') {
+        setModalIndex((modalIndex + 11) % 12)
+      } else if (e.key === 'ArrowRight') {
+        setModalIndex((modalIndex + 1) % 12)
+      }
+    }
+    
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modalIndex])
 
   return (
     <div className="space-y-3">
@@ -24,7 +43,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
           const data = items[i]
           const slot = `gallery-${i}`
           return (
-            <div key={i} onClick={() => { if (!admin && data) setModalIndex(i) }}>
+            <div key={i} onClick={() => { if (data) setModalIndex(i) }}>
               <EditableImage slot={slot} src={data?.url} admin={admin} className="aspect-square cursor-pointer" />
             </div>
           )
@@ -32,15 +51,41 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
       </div>
 
       {modalIndex !== null && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50" onClick={() => setModalIndex(null)}>
-          <div className="relative w-[90vw] max-w-md" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50" onClick={() => setModalIndex(null)}>
+          <div className="relative w-[95vw] h-[95vh] max-w-4xl max-h-[90vh]" onClick={e => e.stopPropagation()}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={items[modalIndex]?.url || ''} alt="gallery" className="w-full rounded-wedding object-cover" />
-            <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2">
-              <button className="wedding-btn-outline px-3 py-1 text-xs" onClick={() => setModalIndex((modalIndex + 11) % 12)}>이전</button>
-              <button className="wedding-btn-outline px-3 py-1 text-xs" onClick={() => setModalIndex((modalIndex + 1) % 12)}>다음</button>
+            <img 
+              src={items[modalIndex]?.url || ''} 
+              alt="gallery" 
+              className="w-full h-full object-contain rounded-lg" 
+            />
+            
+            {/* 닫기 버튼 */}
+            <button 
+              className="absolute top-4 right-4 bg-black/50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/70 transition-colors"
+              onClick={() => setModalIndex(null)}
+            >
+              ✕
+            </button>
+            
+            {/* 이전/다음 버튼 */}
+            <button 
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-black/70 transition-colors"
+              onClick={() => setModalIndex((modalIndex + 11) % 12)}
+            >
+              ‹
+            </button>
+            <button 
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-black/70 transition-colors"
+              onClick={() => setModalIndex((modalIndex + 1) % 12)}
+            >
+              ›
+            </button>
+            
+            {/* 이미지 번호 표시 */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+              {modalIndex + 1} / 12
             </div>
-            <button className="absolute -top-3 -right-3 wedding-btn px-2 py-1 text-xs" onClick={() => setModalIndex(null)}>닫기</button>
           </div>
         </div>
       )}
