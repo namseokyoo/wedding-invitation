@@ -7,13 +7,21 @@ interface GalleryGridProps {
 }
 
 export default function GalleryGrid({ admin }: GalleryGridProps) {
-  const [items, setItems] = useState<{ id: string; url: string }[]>([])
+  const [items, setItems] = useState<{ slot: string; url: string }[]>([])
   const [modalIndex, setModalIndex] = useState<number | null>(null)
 
   async function load() {
-    const res = await fetch('/api/gallery', { cache: 'no-store' })
+    const res = await fetch('/api/images?prefix=gallery-', { cache: 'no-store' })
     const json = await res.json()
-    if (json.ok) setItems(json.items)
+    if (json.ok) {
+      // gallery-0, gallery-1, ... 형태의 slot을 숫자 순서로 정렬
+      const sortedItems = json.items.sort((a: any, b: any) => {
+        const aNum = parseInt(a.slot.replace('gallery-', ''))
+        const bNum = parseInt(b.slot.replace('gallery-', ''))
+        return aNum - bNum
+      })
+      setItems(sortedItems)
+    }
   }
   
   useEffect(() => { load() }, [])
@@ -40,7 +48,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
     <div className="space-y-3">
       <div className="grid grid-cols-3 gap-2">
         {Array.from({ length: 12 }).map((_, i) => {
-          const data = items[i]
+          const data = items.find(item => item.slot === `gallery-${i}`)
           const slot = `gallery-${i}`
           return (
             <div key={i} onClick={() => { if (data) setModalIndex(i) }}>
@@ -55,7 +63,7 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
           <div className="relative w-[95vw] h-[95vh] max-w-4xl max-h-[90vh]" onClick={e => e.stopPropagation()}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
-              src={items[modalIndex]?.url || ''} 
+              src={items.find(item => item.slot === `gallery-${modalIndex}`)?.url || ''} 
               alt="gallery" 
               className="w-full h-full object-contain rounded-lg" 
             />
