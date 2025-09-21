@@ -1,9 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 
-type Props = { slot: string; src?: string; admin?: boolean; className?: string }
+type Props = { slot: string; src?: string; admin?: boolean; className?: string; onClick?: () => void }
 
-export default function EditableImage({ slot, src, admin, className }: Props) {
+export default function EditableImage({ slot, src, admin, className, onClick }: Props) {
   const [url, setUrl] = useState(src)
   const [busy, setBusy] = useState(false)
 
@@ -11,6 +11,24 @@ export default function EditableImage({ slot, src, admin, className }: Props) {
   useEffect(() => {
     setUrl(src)
   }, [src])
+
+  // 컴포넌트 마운트 시 해당 slot의 이미지 로드
+  useEffect(() => {
+    async function loadImage() {
+      if (!src) { // src가 없을 때만 API에서 로드
+        try {
+          const res = await fetch(`/api/images?slot=${slot}`)
+          const json = await res.json()
+          if (json.ok && json.item) {
+            setUrl(json.item.url)
+          }
+        } catch (error) {
+          console.warn('Failed to load image for slot:', slot)
+        }
+      }
+    }
+    loadImage()
+  }, [slot, src])
 
   async function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -29,7 +47,7 @@ export default function EditableImage({ slot, src, admin, className }: Props) {
   }
 
   return (
-    <div className={`${className} relative`}>
+    <div className={`${className} relative`} onClick={onClick}>
       {url ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={url} alt={slot} className="w-full h-full object-cover" />

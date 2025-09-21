@@ -51,8 +51,14 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
           const data = items.find(item => item.slot === `gallery-${i}`)
           const slot = `gallery-${i}`
           return (
-            <div key={i} onClick={() => { if (data) setModalIndex(i) }}>
-              <EditableImage slot={slot} src={data?.url} admin={admin} className="aspect-square cursor-pointer" />
+            <div key={i}>
+              <EditableImage 
+                slot={slot} 
+                src={data?.url} 
+                admin={admin} 
+                className="aspect-square cursor-pointer"
+                onClick={() => { if (data && !admin) setModalIndex(i) }}
+              />
             </div>
           )
         })}
