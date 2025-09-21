@@ -49,8 +49,7 @@ header nav a:hover {
 /* 메인 컨테이너 */
 main {
   min-height: 100vh;
-  padding-top: 80px;
-  /* 헤더 높이만큼 상단 여백 추가 */
+  /* padding-top: 80px; 헤더 비활성화로 주석처리 */
 }
 
 /* 섹션 스타일 */

@@ -44,13 +44,13 @@ export const metadata: Metadata = {
 }
 
 import { GoogleAnalytics } from '@next/third-parties/google'
-import Header from '@/components/Header'
+// import Header from '@/components/Header'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={`min-h-screen font-sans antialiased ${sans.variable} ${display.variable}`}>
-        <Header />
+        {/* <Header /> */}
         {children}
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </body>
