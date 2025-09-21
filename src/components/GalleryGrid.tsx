@@ -173,26 +173,26 @@ export default function GalleryGrid({ admin }: GalleryGridProps) {
 
             {/* 이전/다음 버튼 */}
             <button
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-gradient-to-r from-black/70 to-transparent text-white rounded-r-full w-20 h-32 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-black/70 to-transparent text-white rounded-r-full w-16 h-24 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm z-10"
               onClick={() => setModalIndex((modalIndex + 11) % 12)}
               style={{
-                fontSize: '32px',
+                fontSize: '28px',
                 fontWeight: 'bold',
-                clipPath: 'polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%)'
+                clipPath: 'polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%)'
               }}
             >
-              <span className="group-hover:transform group-hover:-translate-x-2 transition-transform duration-300 ml-2">‹</span>
+              <span className="group-hover:transform group-hover:-translate-x-1 transition-transform duration-300 ml-1">‹</span>
             </button>
             <button
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-gradient-to-l from-black/70 to-transparent text-white rounded-l-full w-20 h-32 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-l from-black/70 to-transparent text-white rounded-l-full w-16 h-24 flex items-center justify-center hover:from-wedding-gold/80 hover:to-transparent transition-all duration-300 shadow-lg group backdrop-blur-sm z-10"
               onClick={() => setModalIndex((modalIndex + 1) % 12)}
               style={{
-                fontSize: '32px',
+                fontSize: '28px',
                 fontWeight: 'bold',
-                clipPath: 'polygon(20% 0, 100% 0, 100% 100%, 20% 100%, 0 50%)'
+                clipPath: 'polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%)'
               }}
             >
-              <span className="group-hover:transform group-hover:translate-x-2 transition-transform duration-300 mr-2">›</span>
+              <span className="group-hover:transform group-hover:translate-x-1 transition-transform duration-300 mr-1">›</span>
             </button>
 
             {/* 이미지 번호 표시 */}
