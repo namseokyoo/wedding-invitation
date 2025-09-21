@@ -5,6 +5,138 @@ import EditableImage from '@/components/EditableImage'
 import GalleryGrid from '@/components/GalleryGrid'
 import { Button, LinkButton, Section, WeddingCard, WeddingTitle, WeddingSubtitle, SectionTitle, WeddingDivider } from '@/components/UI'
 
+// 카운트다운 타이머 컴포넌트
+function CountdownTimer({ targetDate }: { targetDate: Date }) {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  })
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime()
+      const target = targetDate.getTime()
+      const difference = target - now
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        })
+      }
+    }
+
+    calculateTimeLeft()
+    const timer = setInterval(calculateTimeLeft, 1000)
+    return () => clearInterval(timer)
+  }, [targetDate])
+
+  return (
+    <div className="grid grid-cols-4 gap-3">
+      <div className="text-center">
+        <div className="bg-wedding-gold text-white rounded-lg p-3 mb-2">
+          <div className="text-2xl font-bold">{timeLeft.days}</div>
+          <div className="text-sm">일</div>
+        </div>
+      </div>
+      <div className="text-center">
+        <div className="bg-wedding-gold text-white rounded-lg p-3 mb-2">
+          <div className="text-2xl font-bold">{timeLeft.hours.toString().padStart(2, '0')}</div>
+          <div className="text-sm">시간</div>
+        </div>
+      </div>
+      <div className="text-center">
+        <div className="bg-wedding-gold text-white rounded-lg p-3 mb-2">
+          <div className="text-2xl font-bold">{timeLeft.minutes.toString().padStart(2, '0')}</div>
+          <div className="text-sm">분</div>
+        </div>
+      </div>
+      <div className="text-center">
+        <div className="bg-wedding-gold text-white rounded-lg p-3 mb-2">
+          <div className="text-2xl font-bold">{timeLeft.seconds.toString().padStart(2, '0')}</div>
+          <div className="text-sm">초</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// 달력 컴포넌트
+function WeddingCalendar({ targetDate }: { targetDate: Date }) {
+  const year = targetDate.getFullYear()
+  const month = targetDate.getMonth() + 1
+  const day = targetDate.getDate()
+  
+  // 달력 생성 로직
+  const firstDay = new Date(year, month - 1, 1).getDay()
+  const daysInMonth = new Date(year, month, 0).getDate()
+  const days = []
+  
+  // 빈 칸 추가
+  for (let i = 0; i < firstDay; i++) {
+    days.push(null)
+  }
+  
+  // 날짜 추가
+  for (let i = 1; i <= daysInMonth; i++) {
+    days.push(i)
+  }
+  
+  const weekDays = ['일', '월', '화', '수', '목', '금', '토']
+  
+  return (
+    <div className="bg-white rounded-lg p-4 shadow-wedding-soft">
+      <div className="text-center mb-4">
+        <h3 className="text-lg font-wedding text-wedding-deep">{year}년 {month}월</h3>
+      </div>
+      
+      {/* 요일 헤더 */}
+      <div className="grid grid-cols-7 gap-1 mb-2">
+        {weekDays.map((weekDay, index) => (
+          <div key={weekDay} className="text-center text-sm font-medium p-2">
+            <span className={index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : 'text-gray-600'}>
+              {weekDay}
+            </span>
+          </div>
+        ))}
+      </div>
+      
+      {/* 달력 그리드 */}
+      <div className="grid grid-cols-7 gap-1">
+        {days.map((date, index) => (
+          <div key={index} className="text-center p-2">
+            {date && (
+              <div className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${
+                date === day 
+                  ? 'bg-wedding-gold text-white font-bold' 
+                  : index % 7 === 0 
+                    ? 'text-red-500' 
+                    : index % 7 === 6 
+                      ? 'text-blue-500' 
+                      : 'text-gray-700'
+              }`}>
+                {date}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      
+      {/* 결혼식 정보 */}
+      <div className="text-center mt-4 pt-4 border-t border-gray-200">
+        <p className="text-wedding-deep font-medium">
+          {year}년 {month}월 {day}일 {weekDays[targetDate.getDay()]}요일 {targetDate.getHours()}시 {targetDate.getMinutes()}분
+        </p>
+        <p className="text-wedding-text text-sm mt-1">더베뉴지서울</p>
+      </div>
+    </div>
+  )
+}
+
 // 히어로 섹션 컴포넌트 (백그라운드 이미지 포함)
 function HeroSectionWithBackground({ admin, onShare, dday }: { admin: boolean; onShare: () => void; dday: string }) {
   const [heroImageUrl, setHeroImageUrl] = useState<string | null>(null)
@@ -172,19 +304,22 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* Events Section */}
+      {/* 일정 & 카운트다운 Section */}
       <section className="wedding-event-section">
         <div className="max-w-md mx-auto px-6 py-wedding text-center">
-          <SectionTitle>초대합니다</SectionTitle>
+          <SectionTitle>일정</SectionTitle>
           <WeddingDivider />
 
-          <WeddingCard className="space-y-4">
-            <div>
-              <h3 className="font-wedding text-xl mb-2">웨딩 본식</h3>
-              <p className="wedding-text">더베뉴지서울</p>
-              <p className="wedding-text">2025년 12월 28일 일요일 오후 1시 10분</p>
+          <div className="space-y-6">
+            {/* 달력 */}
+            <WeddingCalendar targetDate={weddingDate} />
+            
+            {/* 카운트다운 타이머 */}
+            <div className="text-center">
+              <h3 className="font-wedding text-lg mb-4 text-wedding-deep">결혼까지 남은 시간</h3>
+              <CountdownTimer targetDate={weddingDate} />
             </div>
-          </WeddingCard>
+          </div>
         </div>
       </section>
 
