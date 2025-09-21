@@ -1,0 +1,461 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 웨딩 카드 스타일 - 인라인 CSS */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #F8F6F0 0%, #F5F5DC 25%, #FFF0F5 75%, #F8F6F2 100%);
+  background-attachment: fixed;
+  line-height: 1.6;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* 헤더 - Tailwind CSS 클래스가 우선하도록 제거 */
+
+/* header nav 스타일 제거 - Tailwind CSS 클래스 사용 */
+
+header a {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.125rem;
+  color: #8B4513;
+  text-decoration: none;
+}
+
+header nav>div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header nav a {
+  font-size: 0.875rem;
+  color: rgba(139, 69, 19, 0.8);
+  transition: color 0.2s;
+}
+
+header nav a:hover {
+  color: #D4AF37;
+}
+
+/* 메인 컨테이너 */
+main {
+  min-height: 100vh;
+  padding-top: 80px;
+  /* 헤더 높이만큼 상단 여백 추가 */
+}
+
+/* 섹션 스타일 */
+section {
+  padding: 3.5rem 1.5rem;
+}
+
+.max-w-md {
+  max-width: 448px;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* 웨딩 히어로 */
+.wedding-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(135deg, rgba(248, 246, 240, 0.95) 0%, rgba(245, 245, 220, 0.95) 100%);
+}
+
+/* 타이포그래피 */
+.wedding-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #8B4513;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+/* 반응형 제목 스타일 - 간단한 접근 */
+.wedding-title {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .wedding-title {
+    white-space: normal;
+    line-height: 1.2;
+  }
+}
+
+.wedding-subtitle {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(139, 69, 19, 0.8);
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.wedding-section-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.875rem;
+  font-weight: 500;
+  color: #8B4513;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.wedding-text {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: rgba(139, 69, 19, 0.8);
+  line-height: 1.75;
+}
+
+/* 구분선 */
+.wedding-divider {
+  width: 4rem;
+  height: 2px;
+  background: #D4AF37;
+  margin: 2rem auto;
+  border: none;
+}
+
+/* 카드 스타일 */
+.wedding-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(245, 245, 220, 0.3);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 버튼 스타일 */
+.wedding-btn {
+  background: #D4AF37;
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.1);
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.wedding-btn:hover {
+  background: rgba(212, 175, 55, 0.9);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.wedding-btn-outline {
+  border: 2px solid #D4AF37;
+  color: #D4AF37;
+  background: transparent;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  transition: all 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.wedding-btn-outline:hover {
+  background: #D4AF37;
+  color: white;
+}
+
+/* 섹션별 배경 */
+.wedding-couple-section {
+  background: linear-gradient(135deg, #FFF0F5 0%, #F8F6F2 100%);
+}
+
+.wedding-event-section {
+  background: linear-gradient(135deg, #F5F5DC 0%, #FFF0F5 100%);
+}
+
+.wedding-gallery-section {
+  background: linear-gradient(135deg, #F8F6F0 0%, #F5F5DC 100%);
+}
+
+.wedding-gift-section {
+  background: linear-gradient(135deg, rgba(232, 180, 184, 0.3) 0%, rgba(245, 245, 220, 0.5) 100%);
+}
+
+/* 그리드 레이아웃 */
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+/* 여백 */
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* 폼 스타일 */
+input,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(245, 245, 220, 1);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #D4AF37;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+/* 유틸리티 */
+.w-full {
+  width: 100%;
+}
+
+.h-24 {
+  height: 6rem;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.space-y-2>*+* {
+  margin-top: 0.5rem;
+}
+
+.space-y-3>*+* {
+  margin-top: 0.75rem;
+}
+
+.space-y-4>*+* {
+  margin-top: 1rem;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border {
+  border: 1px solid #e5e7eb;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.opacity-70 {
+  opacity: 0.7;
+}
+
+.opacity-80 {
+  opacity: 0.8;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.resize-none {
+  resize: none;
+}
+
+/* 이미지 */
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+.rounded-wedding {
+  border-radius: 1.5rem;
+}
+
+.shadow-wedding-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-wedding-soft {
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.1);
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+/* 다크 테마 제거됨 */
